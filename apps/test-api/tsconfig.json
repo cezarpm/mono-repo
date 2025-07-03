@@ -1,6 +1,12 @@
 {
   "extends": "@repo/typescript-config/api.json",
-  "compilerOptions": {},
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "module": "CommonJS",
+    "target": "ES2022",
+    "esModuleInterop": true
+  },
   "include": ["**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

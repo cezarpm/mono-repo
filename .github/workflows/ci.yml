@@ -27,21 +27,19 @@ jobs:
       - name: Build all apps
         run: yarn build
 
-      # ▸ Deploy Web App to Netlify
-      # - name: Deploy Web App to Netlify
-      #   run: |
-      #     npx netlify deploy --prod --cwd=apps/web --site=$NETLIFY_SITE_ID_WEB --auth=$NETLIFY_AUTH_TOKEN
-      #   env:
-      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      #     NETLIFY_SITE_ID_WEB: ${{ secrets.NETLIFY_SITE_ID_WEB }}
+      - name: Deploy Web App to Netlify
+        run: |
+          npx netlify deploy --prod --cwd=apps/web --site=$NETLIFY_SITE_ID_WEB --auth=$NETLIFY_AUTH_TOKEN
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID_WEB: ${{ secrets.NETLIFY_SITE_ID_WEB }}
 
-      # ▸ Deploy Docs App to Netlify
-      # - name: Deploy Docs App to Netlify
-      #   run: |
-      #     npx netlify deploy --prod --cwd=apps/docs --site=$NETLIFY_SITE_ID_DOCS --auth=$NETLIFY_AUTH_TOKEN
-      #   env:
-      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      #     NETLIFY_SITE_ID_DOCS: ${{ secrets.NETLIFY_SITE_ID_DOCS }}
+      - name: Deploy Docs App to Netlify
+        run: |
+          npx netlify deploy --prod --cwd=apps/docs --site=$NETLIFY_SITE_ID_DOCS --auth=$NETLIFY_AUTH_TOKEN
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID_DOCS: ${{ secrets.NETLIFY_SITE_ID_DOCS }}
 
       - name: Trigger Render Deploy
         run: curl -X POST $RENDER_DEPLOY_HOOK_URL

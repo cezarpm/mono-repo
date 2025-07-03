@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://mono-repo-xnau.onrender.com",
   timeout: 5000,
 });
 
