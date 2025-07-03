@@ -10,8 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      SVC_ID: dffb6765-1283-4c94-b854-dba988145254
-      RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
+      RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
 
     steps:
       - name: Checkout code
@@ -44,10 +43,5 @@ jobs:
       #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
       #     NETLIFY_SITE_ID_DOCS: ${{ secrets.NETLIFY_SITE_ID_DOCS }}
 
-      - name: Install Railway CLI
-        run: npm install -g @railway/cli
-
-      - name: Deploy Test API to Railway
-        run: |
-          cd apps/test-api
-          railway up --service=$SVC_ID
+      - name: Trigger Render Deploy
+        run: curl -X POST $RENDER_DEPLOY_HOOK_URL
