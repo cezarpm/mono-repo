@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "tsnd --exit-child --transpile-only --respawn --ignore-watch node_modules --no-notify ./src/index.ts"
+    "dev": "tsnd --exit-child --transpile-only --respawn --ignore-watch node_modules --no-notify ./src/index.ts",
+    "build": "tsc -p tsconfig.json"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

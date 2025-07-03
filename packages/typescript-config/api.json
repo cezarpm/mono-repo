@@ -20,11 +20,7 @@
     "baseUrl": ".",
     "lib": ["ES2023"],
     "typeRoots": ["./src/types"],
-    "rootDirs": ["src", "prisma", "test"],
-    "paths": {
-      "@/*": ["./src/*"],
-      "@/kronoos-clients/*": ["./node_modules/@kronoos-clients/*"]
-    }
+    "rootDirs": ["src", "test"]
   },
   "include": ["src/**/*.ts", "test/**/*.ts", "prisma/**/*"],
   "exclude": ["node_modules", ".vscode"],

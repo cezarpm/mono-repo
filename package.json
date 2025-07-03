@@ -10,6 +10,7 @@
     "test": "turbo run test"
   },
   "devDependencies": {
+    "@types/minimatch": "^6.0.0",
     "prettier": "^3.6.0",
     "turbo": "^2.5.4",
     "typescript": "5.8.2"
@@ -19,7 +20,7 @@
   },
   "packageManager": "yarn@1.22.22",
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ]
 }
