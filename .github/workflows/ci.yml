@@ -9,6 +9,10 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    env:
+      SVC_ID: dffb6765-1283-4c94-b854-dba988145254/settings?environmentId=2dab2a46-c2fa-4ce9-aefe-8cc6493393c4
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -44,14 +48,6 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Authenticate Railway CLI
-        run: railway login --apiKey ${{ secrets.RAILWAY_API_TOKEN }}
-        env:
-          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
-
       - name: Deploy Test API to Railway
-        run: |
-          cd apps/test-api
-          railway up
-        env:
-          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
+          - uses: actions/checkout@v3
+          - run: railway up --service=${{ env.SVC_ID }}
