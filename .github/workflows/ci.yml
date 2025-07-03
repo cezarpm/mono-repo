@@ -12,19 +12,10 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Cache turbo build setup
-        uses: actions/cache@v4
-        with:
-          path: .turbo
-          key: ${{ runner.os }}-turbo-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-turbo-
-
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
 
       - name: Install dependencies
         run: npm install
@@ -32,21 +23,22 @@ jobs:
       - name: Build all apps
         run: npm run build
 
-      - name: Deploy Web App
+      - name: Deploy Web App to Netlify
         run: npx netlify deploy --prod --dir=apps/web/dist
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_WEB }}
 
-      - name: Deploy Docs Site
+      - name: Deploy Docs Site to Netlify
         run: npx netlify deploy --prod --dir=apps/docs/dist
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_DOCS }}
 
-      - name: Deploy API on Railway
-        uses: railwayapp/actions@v2
+      - name: Deploy Landing API to Railway
+        uses: bervProject/railway-deploy@main
         with:
-          railwayToken: ${{ secrets.RAILWAY_API_TOKEN }}
-          workingDirectory: apps/teste-api
-          projectId: ${{ secrets.RAILWAY_PROJECT_ID }}
+          project: ${{ secrets.RAILWAY_PROJECT_ID }}
+          service: "landing-api"
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
