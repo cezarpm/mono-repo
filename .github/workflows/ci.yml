@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      SVC_ID: dffb6765-1283-4c94-b854-dba988145254/settings?environmentId=2dab2a46-c2fa-4ce9-aefe-8cc6493393c4
+      SVC_ID: dffb6765-1283-4c94-b854-dba988145254
       RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
 
     steps:
@@ -44,10 +44,10 @@ jobs:
       #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
       #     NETLIFY_SITE_ID_DOCS: ${{ secrets.NETLIFY_SITE_ID_DOCS }}
 
-      # ▸ Deploy API to Railway
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
       - name: Deploy Test API to Railway
-          - uses: actions/checkout@v3
-          - run: railway up --service=${{ env.SVC_ID }}
+        run: |
+          cd apps/test-api
+          railway up --service=$SVC_ID
