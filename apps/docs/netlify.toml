@@ -1,0 +1,11 @@
+[build]
+  command = "yarn build"
+  publish = ".next"
+
+[functions]
+  directory = "netlify/functions"
+
+[dev]
+  command = "yarn dev"
+  port = 8889
+  targetPort = 3000
