@@ -46,4 +46,4 @@ jobs:
           cd apps/test-api
           railway up
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_TOKEN: ${{ secrets. RAILWAY_API_TOKEN  }}
