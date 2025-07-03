@@ -47,10 +47,11 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID_DOCS: ${{ secrets.NETLIFY_SITE_ID_DOCS }}
 
-      # - name: Deploy Landing API to Railway
-      #   uses: bervProject/railway-deploy@main
-      #   with:
-      #     project: ${{ secrets.RAILWAY_PROJECT_ID }}
-      #     service: landing-api
-      #   env:
-      #     RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      - name: Deploy Landing API to Railway
+        uses: bervProject/railway-deploy@main
+        working-directory: apps/landing-api
+        with:
+          project: ${{ secrets.RAILWAY_PROJECT_ID }}
+          service: landing-api
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
