@@ -41,9 +41,9 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g railway
 
-      - name: Deploy Landing API to Railway
+      - name: Deploy Test API to Railway
         run: |
-          cd apps/landing-api
-          railway up --project ${{ secrets.RAILWAY_PROJECT_ID }} --service landing-api
+          cd apps/test-api
+          railway up --project ${{ secrets.RAILWAY_PROJECT_ID }} --service test-api
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
