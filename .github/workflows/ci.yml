@@ -26,14 +26,26 @@ jobs:
         run: yarn build
 
       - name: Deploy Web App to Netlify
-        run: npx netlify deploy --prod --cwd=apps/web --site=$NETLIFY_SITE_ID_WEB
+        run: >
+          npx netlify deploy
+          --prod
+          --cwd=apps/web
+          --site=$NETLIFY_SITE_ID_WEB
+          --auth=$NETLIFY_AUTH_TOKEN
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID_WEB: ${{ secrets.NETLIFY_SITE_ID_WEB }}
 
       - name: Deploy Docs App to Netlify
-        run: npx netlify deploy --prod --cwd=apps/docs --site=$NETLIFY_SITE_ID_DOCS
+        run: >
+          npx netlify deploy
+          --prod
+          --cwd=apps/docs
+          --site=$NETLIFY_SITE_ID_DOCS
+          --auth=$NETLIFY_AUTH_TOKEN
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID_DOCS: ${{ secrets.NETLIFY_SITE_ID_DOCS }}
 
       # - name: Deploy Landing API to Railway
       #   uses: bervProject/railway-deploy@main
