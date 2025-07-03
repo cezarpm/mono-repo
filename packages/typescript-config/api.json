@@ -1,0 +1,34 @@
+{
+  "extends": "./base.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "strict": true,
+    "pretty": true,
+    "declaration": true,
+    "removeComments": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "baseUrl": ".",
+    "lib": ["ES2023"],
+    "typeRoots": ["./src/types"],
+    "rootDirs": ["src", "prisma", "test"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/kronoos-clients/*": ["./node_modules/@kronoos-clients/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts", "prisma/**/*"],
+  "exclude": ["node_modules", ".vscode"],
+  "ts-node": {
+    "files": true
+  }
+}

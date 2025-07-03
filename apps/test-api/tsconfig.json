@@ -1,0 +1,6 @@
+{
+  "extends": "@repo/typescript-config/api.json",
+  "compilerOptions": {},
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

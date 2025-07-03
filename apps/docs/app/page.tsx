@@ -1,5 +1,9 @@
+"use client";
+
+import React from "react";
 import Image, { type ImageProps } from "next/image";
 import { Button } from "@repo/ui/button";
+import { useApiClient } from "@repo/ui/hooks/useApiCliente";
 import styles from "./page.module.css";
 
 type Props = Omit<ImageProps, "src"> & {
@@ -18,7 +22,32 @@ const ThemeImage = (props: Props) => {
   );
 };
 
+type Book = {
+  id: number;
+  title: string;
+  author: string;
+};
+
 export default function Home() {
+  const apiClient = useApiClient();
+  const [books, setBooks] = React.useState<Book[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    apiClient
+      .get("/books")
+      .then((res) => {
+        setBooks(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Erro na API:", err);
+        setError("Erro ao carregar livros.");
+        setLoading(false);
+      });
+  }, [apiClient]);
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
@@ -31,12 +60,25 @@ export default function Home() {
           height={38}
           priority
         />
-        <ol>
-          <li>
-            Get started by editing <code>apps/docs/app/page.tsx</code>
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+
+        <h2>📚 Lista de livros - DOCS</h2>
+
+        {loading && <p>Carregando...</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
+        {!loading && !error && books.length === 0 && (
+          <p>Nenhum livro encontrado.</p>
+        )}
+
+        {!loading && books.length > 0 && (
+          <ul>
+            {books.map((book) => (
+              <li key={book.id}>
+                <strong>{book.title}</strong> — {book.author}
+              </li>
+            ))}
+          </ul>
+        )}
 
         <div className={styles.ctas}>
           <a
