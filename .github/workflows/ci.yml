@@ -8,33 +8,16 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-
-      - name: Cache Turborepo build outputs
-        uses: actions/cache@v4
-        with:
-          path: .turbo
-          key: ${{ runner.os }}-turbo-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-turbo-
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn
-
-      - name: Cache Yarn Dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/yarn
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          cache: "yarn"
 
       - name: Install dependencies
         run: yarn install
@@ -43,21 +26,21 @@ jobs:
         run: yarn build
 
       - name: Deploy Web App to Netlify
-        run: npx netlify deploy --prod --dir=apps/web/dist
+        run: npx netlify deploy --prod --filter=apps/web --dir=apps/web/out
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_WEB }}
 
-      - name: Deploy Docs Site to Netlify
-        run: npx netlify deploy --prod --dir=apps/docs/dist
+      - name: Deploy Docs App to Netlify
+        run: npx netlify deploy --prod --filter=apps/docs --dir=apps/docs/out
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_DOCS }}
 
-      - name: Deploy Landing API to Railway
-        uses: bervProject/railway-deploy@main
-        with:
-          project: ${{ secrets.RAILWAY_PROJECT_ID }}
-          service: landing-api
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      # - name: Deploy Landing API to Railway
+      #   uses: bervProject/railway-deploy@main
+      #   with:
+      #     project: ${{ secrets.RAILWAY_PROJECT_ID }}
+      #     service: landing-api
+      #   env:
+      #     RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
