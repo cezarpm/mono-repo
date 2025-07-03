@@ -17,7 +17,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "yarn"
 
       - name: Install dependencies
         run: yarn install
@@ -26,32 +25,25 @@ jobs:
         run: yarn build
 
       - name: Deploy Web App to Netlify
-        run: >
-          npx netlify deploy
-          --prod
-          --cwd=apps/web
-          --site=$NETLIFY_SITE_ID_WEB
-          --auth=$NETLIFY_AUTH_TOKEN
+        run: |
+          npx netlify deploy --prod --cwd=apps/web --site=$NETLIFY_SITE_ID_WEB --auth=$NETLIFY_AUTH_TOKEN
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID_WEB: ${{ secrets.NETLIFY_SITE_ID_WEB }}
 
       - name: Deploy Docs App to Netlify
-        run: >
-          npx netlify deploy
-          --prod
-          --cwd=apps/docs
-          --site=$NETLIFY_SITE_ID_DOCS
-          --auth=$NETLIFY_AUTH_TOKEN
+        run: |
+          npx netlify deploy --prod --cwd=apps/docs --site=$NETLIFY_SITE_ID_DOCS --auth=$NETLIFY_AUTH_TOKEN
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID_DOCS: ${{ secrets.NETLIFY_SITE_ID_DOCS }}
 
+      - name: Install Railway CLI
+        run: npm install -g railway
+
       - name: Deploy Landing API to Railway
-        uses: bervProject/railway-deploy@main
-        working-directory: apps/landing-api
-        with:
-          project: ${{ secrets.RAILWAY_PROJECT_ID }}
-          service: landing-api
+        run: |
+          cd apps/landing-api
+          railway up --project ${{ secrets.RAILWAY_PROJECT_ID }} --service landing-api
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
