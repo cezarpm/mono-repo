@@ -44,6 +44,6 @@ jobs:
       - name: Deploy Test API to Railway
         run: |
           cd apps/test-api
-          railway up --project ${{ secrets.RAILWAY_PROJECT_ID }} --service test-api
+          railway up
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
